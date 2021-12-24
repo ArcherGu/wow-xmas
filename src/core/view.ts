@@ -141,6 +141,7 @@ export class View {
         // Audio
         const listener = new AudioListener();
         this.audio = new Audio(listener);
+        this.audio.setLoop(true);
         this.initMusic().then(() => {
             musicLoadCallback?.();
         });

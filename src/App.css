@@ -32,11 +32,11 @@
 .foot {
     width: 100%;
     position: absolute;
-    bottom: 0;
+    bottom: 10px;
     text-align: center;
     z-index: 99;
     color: #d4d4d8;
-    font-size: .7rem;
+    font-size: 0.7rem;
     line-height: 1.25rem;
 }
 
@@ -44,8 +44,8 @@
     color: #d4d4d8;
     font-weight: inherit;
     text-decoration: none;
-    border-bottom: 1px dotted rgba(125, 125, 125, .1);
-    transition: all .3s ease-in-out;
+    border-bottom: 1px dotted rgba(125, 125, 125, 0.1);
+    transition: all 0.3s ease-in-out;
     margin-left: 4px;
 }
 
