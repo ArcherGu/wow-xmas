@@ -1,0 +1,130 @@
+.cover {
+    height: 100%;
+    width: 100%;
+    background-image: radial-gradient(#fff 20%, transparent 20%), radial-gradient(#fff 20%, transparent 20%);
+    background-color: #fb923c;
+    background-size: 100px 100px;
+    background-position: 0 0, 50px 50px;
+    position: relative;
+    z-index: 29;
+}
+
+.cover.opened {
+    display: none;
+}
+
+.cover.open {
+    animation: open 2s ease-out;
+}
+
+.bow {
+    z-index: 31;
+    position: absolute;
+    width: 300px;
+    height: 200px;
+    left: calc(30% - 145px);
+    top: calc(30% - 85px);
+    opacity: 0.98;
+    cursor: pointer;
+}
+
+.bow img {
+    width: 300px;
+    height: 200px;
+}
+
+.touch {
+    color: #fff;
+    font-size: 3rem;
+    z-index: 32;
+    position: absolute;
+    left: 120px;
+    top: 100px;
+    animation: shake 1s infinite linear;
+}
+
+.line-item {
+    background: rgba(252, 70, 173, 0.97);
+    position: absolute;
+    z-index: 30;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.15);
+}
+
+.line-item:after,
+.line-item:before {
+    content: '';
+    box-shadow: inherit;
+    background: inherit;
+    position: absolute;
+    width: inherit;
+    height: inherit;
+}
+
+.line-item--vert {
+    left: calc(30% - 2rem);
+    top: 0;
+    width: 4rem;
+    height: 100%;
+    -webkit-transform-origin: center top;
+    -ms-transform-origin: center top;
+    transform-origin: center top;
+}
+
+.line-item--vert:before {
+    top: -100%;
+    box-shadow: 2px -3px 3px rgba(0, 0, 0, 0.15);
+}
+
+.line-item--vert:after {
+    top: 100%;
+}
+
+.line-item--hor {
+    width: 100%;
+    left: 0;
+    height: 4rem;
+    top: calc(30% - 2rem);
+}
+
+.line-item--hor:before {
+    left: -100%;
+    box-shadow: 2px -3px 3px rgba(0, 0, 0, 0.15);
+}
+
+.line-item--hor:after {
+    left: 100%;
+}
+
+@keyframes open {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+@keyframes shake {
+    0% {
+        transform: translateY(0px);
+    }
+
+    25% {
+        transform: translateY(10px);
+    }
+
+    50% {
+        transform: translateY(20px);
+    }
+
+    75% {
+        transform: translateY(10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}

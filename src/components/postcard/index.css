@@ -1,0 +1,127 @@
+.postcard {
+    width: 350px;
+    padding: 10px;
+    background: #fff;
+    position: absolute;
+    bottom: 0px;
+    right: -20px;
+    z-index: 40;
+    border-radius: 3px;
+    transform: rotate(-15deg);
+}
+
+.postcard:after {
+    content: '';
+    background: repeating-linear-gradient(
+        45deg,
+        #114abc,
+        #114abc 10px,
+        #fff 10px,
+        #fff 20px,
+        #bf2010 20px,
+        #bf2010 30px,
+        #fff 30px,
+        #fff 40px
+    );
+
+    border-radius: 6px;
+    box-shadow: 1px 2px 6px 1px rgba(76, 66, 47, 0.75);
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    z-index: -1;
+}
+
+.postcard .content {
+    background: #fff;
+    padding: 20px;
+    width: calc(100% - 40px);
+    height: calc(100% - 40px);
+    border-radius: 6px;
+}
+
+.postcard .to {
+    font-size: 1.2rem;
+    display: inline-block;
+    /* margin-left: -30px; */
+    margin: 10px 10px 10px -30px;
+    padding: 5px 15px 5px 30px;
+    background: #bf2010;
+    border-width: 1px 1px 1px 0px;
+    border-style: dashed;
+    color: #fff;
+    box-shadow: 2px 0 0 2px #bf2010, 2px 2px 0 2px #bf2010, 2px -2px 0 2px #bf2010, inset 0 0 5px 2px rgba(0, 0, 0, 0.2);
+}
+
+.postcard .from {
+    text-align: end;
+    padding-right: 20px;
+}
+
+.postcard p {
+    font-size: 1rem;
+    line-height: 140%;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+.stamp {
+    width: 45px;
+    height: 45px;
+    display: inline-block;
+    padding: 10px;
+    background: white;
+    position: relative;
+    -webkit-filter: drop-shadow(0px 0px 1px rgba(0, 0, 0, 0.5));
+    background: radial-gradient(transparent 0px, transparent 4px, white 2px, white);
+    background-size: 16px 16px;
+    background-position: -8px -8px;
+    position: absolute;
+    right: 30px;
+}
+
+.christmas {
+    transform: scale(0.25);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -100px;
+    width: 200px;
+    height: 200px;
+    position: relative;
+    background-color: #0c1e42;
+    background-image: radial-gradient(circle at 50% 18%, yellow 3%, transparent 3.5%),
+        linear-gradient(60deg, #7dae41 8%, transparent 8.5%), linear-gradient(-60deg, #79a83f 8%, transparent 8.5%),
+        linear-gradient(60deg, #75a33d 10%, transparent 10.5%), linear-gradient(-60deg, #719d3b 10%, transparent 10.5%),
+        linear-gradient(60deg, #6d9839 12%, transparent 12.5%), linear-gradient(-60deg, #699237 12%, transparent 12.5%),
+        linear-gradient(80deg, #855726 5%, transparent 5.5%), linear-gradient(-80deg, #7f5324 5%, transparent 5.5%);
+    background-position: 0 0, 100px 80px, 100px 80px, 100px 111px, 100px 111px, 100px 143px, 100px 143px, 100px 160px,
+        100px 160px;
+}
+
+.christmas:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transform: rotate(-15deg);
+    background-image: radial-gradient(circle at 30% 30%, #fff 1.5%, transparent 2.5%),
+        radial-gradient(circle at 80% 70%, #fff 1.5%, transparent 2.5%),
+        radial-gradient(circle at 30% 50%, #fff 1%, transparent 2%),
+        radial-gradient(circle at 70% 85%, #fff 1%, transparent 2%);
+    background-size: 100% 100%, 100% 100%, 50% 100%, 50% 50%;
+    background-position: 0 0, 0 0, 0 0, 0 0;
+    animation: snow 6s linear infinite forwards;
+}
+
+@keyframes snow {
+    100% {
+        background-position: 0px 200px, 0 200px, 0px 200px, 0px 200px;
+    }
+}

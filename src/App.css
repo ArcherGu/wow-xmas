@@ -1,0 +1,55 @@
+.app,
+.world {
+    height: 100%;
+    width: 100%;
+}
+
+.app {
+    position: relative;
+}
+
+.world {
+    position: absolute;
+    z-index: 2;
+}
+
+.btn-block {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 20;
+}
+
+.btn {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1.5rem;
+    padding: 0;
+}
+
+.foot {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    z-index: 99;
+    color: #d4d4d8;
+    font-size: .7rem;
+    line-height: 1.25rem;
+}
+
+.foot a {
+    color: #d4d4d8;
+    font-weight: inherit;
+    text-decoration: none;
+    border-bottom: 1px dotted rgba(125, 125, 125, .1);
+    transition: all .3s ease-in-out;
+    margin-left: 4px;
+}
+
+.foot a:hover {
+    color: #00aa90;
+    border-bottom: 1px dotted #00aa90;
+}
