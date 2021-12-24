@@ -33,17 +33,20 @@ import snowflake3 from "../assets/snowflake3.png";
 import snowflake4 from "../assets/snowflake4.png";
 import HDR_FILE from "../assets/venice_sunset_1k.hdr?url";
 import { GlassFree3dCamera } from "./GlassFree3dCamera";
+import NProgress from 'nprogress';
+import "nprogress/nprogress.css";
+import "./index.css";
 
-const MUSIC_URL = "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Simon_Panrucker/Happy_Christmas_You_Guys/Simon_Panrucker_-_01_-_Snowflakes_Falling_Down.mp3"
+const MUSIC_URL = "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Simon_Panrucker/Happy_Christmas_You_Guys/Simon_Panrucker_-_01_-_Snowflakes_Falling_Down.mp3";
 const THREE_PATH = `https://unpkg.com/three@0.${REVISION}.x`;
-const DRACO_Loader = new DRACOLoader().setDecoderPath(`${THREE_PATH}/examples/js/libs/draco/gltf/`)
+const DRACO_Loader = new DRACOLoader().setDecoderPath(`${THREE_PATH}/examples/js/libs/draco/gltf/`);
 
 interface ModelInfo {
     name: string,
     url: string,
     pos: [number, number, number],
     rot: [number, number, number],
-    scale: number
+    scale: number;
 }
 
 const MODELS: ModelInfo[] = [
@@ -68,9 +71,9 @@ const MODELS: ModelInfo[] = [
         rot: [0, -Math.PI / 4 * 3, 0],
         scale: 0.003,
     }
-]
+];
 
-const SNOWFLAKES = [snowflake0, snowflake1, snowflake2, snowflake3, snowflake4]
+const SNOWFLAKES = [snowflake0, snowflake1, snowflake2, snowflake3, snowflake4];
 
 export class View {
     private scene: Scene;
@@ -82,7 +85,7 @@ export class View {
     private loader: GLTFLoader;
     private controls: OrbitControls;
     private models: Group;
-    private mixers: AnimationMixer[]
+    private mixers: AnimationMixer[];
     private clock: Clock;
     private isAutoRotate: boolean = true;
     private particlesGroup: Points[] = [];
@@ -116,19 +119,17 @@ export class View {
         // Renderer
         this.renderer = new WebGLRenderer({ antialias: true, alpha: true });
         this.renderer.setPixelRatio(window.devicePixelRatio);
-        this.renderer.setSize(width, height)
+        this.renderer.setSize(width, height);
         this.renderer.outputEncoding = sRGBEncoding;
         this.el.appendChild(this.renderer.domElement);
 
         // Loader
         this.loader = new GLTFLoader().setDRACOLoader(DRACO_Loader);
-        Promise.all(MODELS.map(m => this.load(m))).then(() => {
-            loadCallback?.();
-        })
-        // MODELS.forEach(m => this.load(m));
+        NProgress.start();
+        MODELS.forEach(m => this.load(m).then(() => m.name === 'world' && loadCallback?.()).finally(() => m.name === 'world' && NProgress.done()));
 
         const modelsScale = 1.5;
-        this.models.scale.set(modelsScale, modelsScale, modelsScale)
+        this.models.scale.set(modelsScale, modelsScale, modelsScale);
         this.scene.add(this.models);
 
         // Controls
@@ -156,7 +157,7 @@ export class View {
         this.pmremGenerator = new PMREMGenerator(this.renderer);
         this.pmremGenerator.compileEquirectangularShader();
         this.setEnvironment().then(({ envMap }) => {
-            this.scene.environment = envMap
+            this.scene.environment = envMap;
         });
 
         this.initBackground();
@@ -175,7 +176,7 @@ export class View {
             const geometry = new BufferGeometry();
             const texture = new TextureLoader().load(snowflake);
             const verticesAttr: number[] = [];
-            const vertices: number[] = []
+            const vertices: number[] = [];
             const range = 200;
             const count = 100;
             for (let i = 0; i < count; i++) {
@@ -202,7 +203,7 @@ export class View {
                 depthTest: false
             });
 
-            this.particlesGroup.push(new Points(geometry, materials))
+            this.particlesGroup.push(new Points(geometry, materials));
         }
 
 
@@ -216,7 +217,7 @@ export class View {
             const verticesAttr = particles.geometry.attributes.verticesAttr;
 
             const newVerticesAttr: number[] = [];
-            const newVertices: number[] = []
+            const newVertices: number[] = [];
             for (var i = 0; i < verticesAttr.array.length; i += 5) {
                 const x = verticesAttr.array[i];
                 const y = verticesAttr.array[i + 1];
@@ -226,13 +227,13 @@ export class View {
 
                 let newX = x - velocityX;
                 let newY = y - velocityY;
-                let newVelocityX = velocityX
+                let newVelocityX = velocityX;
 
                 if (newY <= -100) newY = 60;
                 if (newX <= -100 || newX >= 100) newVelocityX = velocityX * -1;
 
-                newVerticesAttr.push(newX, newY, z, newVelocityX, velocityY)
-                newVertices.push(newX, newY, z)
+                newVerticesAttr.push(newX, newY, z, newVelocityX, velocityY);
+                newVertices.push(newX, newY, z);
             }
 
             particles.geometry.setAttribute('position', new Float32BufferAttribute(newVertices, 3));
@@ -241,18 +242,18 @@ export class View {
     }
 
     private async setEnvironment() {
-        if (!HDR_FILE) return { envMap: null }
+        if (!HDR_FILE) return { envMap: null };
 
-        const texture = await new RGBELoader().setDataType(UnsignedByteType).loadAsync(HDR_FILE)
+        const texture = await new RGBELoader().setDataType(UnsignedByteType).loadAsync(HDR_FILE);
         const envMap = this.pmremGenerator.fromEquirectangular(texture).texture;
         this.pmremGenerator.dispose();
 
-        return { envMap }
+        return { envMap };
     }
 
     private render() {
         this.updateBackground();
-        this.activeCamera.updateProjectionMatrix()
+        this.activeCamera.updateProjectionMatrix();
         this.renderer.render(this.scene, this.activeCamera);
     }
 
@@ -292,7 +293,7 @@ export class View {
         const [rX, rY, rZ] = modelInfo.rot;
         mesh.rotation.set(rX, rY, rZ);
 
-        const { scale } = modelInfo
+        const { scale } = modelInfo;
         mesh.scale.set(scale, scale, scale);
 
         const mixer = new AnimationMixer(mesh);
@@ -318,7 +319,7 @@ export class View {
     }
 
     triggerMusicPlay(play: boolean) {
-        play ? (!this.audio.isPlaying && this.audio.play()) : (this.audio.isPlaying && this.audio.pause())
+        play ? (!this.audio.isPlaying && this.audio.play()) : (this.audio.isPlaying && this.audio.pause());
     }
 
     triggerAutoRotate() {
@@ -330,7 +331,7 @@ export class View {
         this.controls.enabled = false;
 
         this.activeCamera = this.gCamera;
-        console.log("use GlassFree3dCamera")
+        console.log("use GlassFree3dCamera");
     }
 
     changeToPCamera() {
@@ -338,11 +339,11 @@ export class View {
         this.controls.reset();
 
         this.activeCamera = this.pCamera;
-        console.log("use PerspectiveCamera")
+        console.log("use PerspectiveCamera");
     }
 
     dispose() {
         window.removeEventListener('resize', this.resize);
-        this.el?.removeChild(this.renderer.domElement)
+        this.el?.removeChild(this.renderer.domElement);
     }
 }

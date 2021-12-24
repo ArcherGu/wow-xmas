@@ -1,0 +1,15 @@
+#nprogress .bar {
+    background: #d33144;
+    background: repeating-linear-gradient(45deg, #ffffee, #ffffee 7px, #d33144 7px, #d33144 15px);
+    height: 5px;
+}
+
+#nprogress .bar .peg {
+    box-shadow: none;
+}
+
+
+#nprogress .spinner .spinner-icon {
+    border-top-color: #d33144;
+    border-left-color: #d33144;
+}
