@@ -9,6 +9,8 @@ const Index: React.FC = () => {
     const [view, setView] = useState<View>();
     const [isOrientation, setIsOrientation] = useState(false);
     const [isAutoRotate, setIsAutoRotate] = useState(true);
+    const [isMusic, setIsMusic] = useState(false);
+    const [isMusicPlay, setIsMusicPlay] = useState(true);
     const [showTouch, setShowTouch] = useState(false);
     const [activeCamera, setActiveCamera] = useState('pCamera');
     const isMobile = !IsPC();
@@ -16,6 +18,8 @@ const Index: React.FC = () => {
     useEffect(() => {
         setView(new View(mount.current!, () => {
             setShowTouch(true);
+        }, () => {
+            setIsMusic(true);
         }))
         return () => {
             view?.dispose();
@@ -29,7 +33,7 @@ const Index: React.FC = () => {
         }
 
         try {
-            await view.initGCamera();
+            await view.open();
             setIsOrientation(true)
         } catch (error) {
             // denied
@@ -58,9 +62,23 @@ const Index: React.FC = () => {
         }
     }
 
+    const triggerMusicPlay = () => {
+        if (!view) return;
+        view.triggerMusicPlay(!isMusicPlay);
+        setIsMusicPlay(!isMusicPlay);
+    }
+
     return (
         <div className="app">
             <div className="btn-block">
+                {
+                    isMusic &&
+                    <div>
+                        <button onClick={triggerMusicPlay} className="btn">
+                            {isMusicPlay ? <IconAkarIconsSoundOff /> : <IconAkarIconsSoundOn />}
+                        </button>
+                    </div>
+                }
                 {
                     (isMobile && isOrientation) &&
                     <div>

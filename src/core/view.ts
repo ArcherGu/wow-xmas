@@ -14,7 +14,10 @@ import {
     PointsMaterial,
     AdditiveBlending,
     Float32BufferAttribute,
-    Points
+    Points,
+    Audio,
+    AudioLoader,
+    AudioListener
 } from "three";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
@@ -31,6 +34,7 @@ import snowflake4 from "../assets/snowflake4.png";
 import HDR_FILE from "../assets/venice_sunset_1k.hdr?url";
 import { GlassFree3dCamera } from "./GlassFree3dCamera";
 
+const MUSIC_URL = "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Simon_Panrucker/Happy_Christmas_You_Guys/Simon_Panrucker_-_01_-_Snowflakes_Falling_Down.mp3"
 const THREE_PATH = `https://unpkg.com/three@0.${REVISION}.x`;
 const DRACO_Loader = new DRACOLoader().setDecoderPath(`${THREE_PATH}/examples/js/libs/draco/gltf/`)
 
@@ -82,8 +86,11 @@ export class View {
     private clock: Clock;
     private isAutoRotate: boolean = true;
     private particlesGroup: Points[] = [];
+    private audio: Audio;
+    private isOpen: boolean = false;
+    private isMusicLoad: boolean = false;
 
-    constructor(private el: HTMLDivElement, loadCallback?: () => void) {
+    constructor(private el: HTMLDivElement, loadCallback?: () => void, musicLoadCallback?: () => void) {
         const { clientHeight: height, clientWidth: width } = this.el;
         const aspect = width / height;
         const dis = width / 10;
@@ -131,6 +138,13 @@ export class View {
         this.controls.maxDistance = 60;
         this.controls.enablePan = false;
 
+        // Audio
+        const listener = new AudioListener();
+        this.audio = new Audio(listener);
+        this.initMusic().then(() => {
+            musicLoadCallback?.();
+        });
+
         // Animate
         this.animate = this.animate.bind(this);
         requestAnimationFrame(this.animate);
@@ -145,9 +159,14 @@ export class View {
         });
 
         this.initBackground();
+    }
 
-        // const axes = new AxesHelper(40);
-        // this.scene.add(axes);
+    private async initMusic() {
+        const loader = new AudioLoader();
+        const musicBuf = await loader.loadAsync(MUSIC_URL);
+        this.audio.setBuffer(musicBuf);
+        this.isMusicLoad = true;
+        if (this.isOpen) this.audio.play();
     }
 
     private initBackground() {
@@ -288,13 +307,22 @@ export class View {
         this.models.rotation.y -= Math.PI / (360 * 5);
     }
 
+    async open() {
+        this.isOpen = true;
+        if (this.isMusicLoad) {
+            !this.audio.isPlaying && this.audio.play();
+        }
+
+        await this.gCamera.initDeviceOrientation();
+    }
+
+    triggerMusicPlay(play: boolean) {
+        play ? (!this.audio.isPlaying && this.audio.play()) : (this.audio.isPlaying && this.audio.pause())
+    }
+
     triggerAutoRotate() {
         this.isAutoRotate = !this.isAutoRotate;
         return this.isAutoRotate;
-    }
-
-    initGCamera() {
-        return this.gCamera.initDeviceOrientation();
     }
 
     changeToGCamera() {

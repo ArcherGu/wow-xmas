@@ -24,6 +24,7 @@
         "unplugin-auto-import": "^0.5.4",
         "unplugin-icons": "^0.12.23",
         "vite": "^2.7.2",
-        "vite-plugin-mkcert": "^1.5.2"
+        "vite-plugin-mkcert": "^1.5.2",
+        "vite-plugin-pwa": "^0.11.12"
     }
 }
