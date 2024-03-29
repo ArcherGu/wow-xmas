@@ -4,5 +4,3 @@ dist
 dist-ssr
 *.local
 test
-
-auto-imports.d.ts
