@@ -24,6 +24,7 @@ export default defineConfig({
       jsx: 'react'
     }),
     VitePWA({
+      injectRegister: 'auto',
       registerType: 'autoUpdate',
       manifest: {
         name: 'Xmas2022',
