@@ -1,32 +1,33 @@
 {
-    "name": "wow-xmas",
-    "description": "A Christmas present from a father to a child",
-    "version": "0.0.1",
-    "scripts": {
-        "dev": "vite --host",
-        "build": "tsc && vite build",
-        "preview": "vite preview"
-    },
-    "dependencies": {
-        "nprogress": "^0.2.0",
-        "react": "^17.0.2",
-        "react-dom": "^17.0.2",
-        "three": "^0.135.0"
-    },
-    "devDependencies": {
-        "@iconify/json": "^1.1.446",
-        "@svgr/core": "5.5.0",
-        "@types/node": "^17.0.2",
-        "@types/nprogress": "^0.2.0",
-        "@types/react": "^17.0.33",
-        "@types/react-dom": "^17.0.10",
-        "@types/three": "^0.135.0",
-        "@vitejs/plugin-react": "^1.0.7",
-        "typescript": "^4.4.4",
-        "unplugin-auto-import": "^0.5.4",
-        "unplugin-icons": "^0.12.23",
-        "vite": "^2.7.2",
-        "vite-plugin-mkcert": "^1.5.2",
-        "vite-plugin-pwa": "^0.11.12"
-    }
+  "name": "wow-xmas",
+  "description": "A Christmas present from a father to his children",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "preview:pwa": "vite build && vite preview"
+  },
+  "dependencies": {
+    "nprogress": "^0.2.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "three": "^0.135.0"
+  },
+  "devDependencies": {
+    "@iconify/json": "^1.1.446",
+    "@svgr/core": "5.5.0",
+    "@types/node": "^17.0.2",
+    "@types/nprogress": "^0.2.0",
+    "@types/react": "^17.0.33",
+    "@types/react-dom": "^17.0.10",
+    "@types/three": "^0.135.0",
+    "@vitejs/plugin-react": "^1.0.7",
+    "typescript": "^4.4.4",
+    "unplugin-auto-import": "^0.5.4",
+    "unplugin-icons": "^0.12.23",
+    "vite": "^2.7.2",
+    "vite-plugin-mkcert": "^1.5.2",
+    "vite-plugin-pwa": "^0.11.12"
+  }
 }
